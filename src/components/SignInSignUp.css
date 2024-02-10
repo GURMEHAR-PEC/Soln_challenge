@@ -6,7 +6,7 @@
 }
 
 body {
-    background-image: url("../components/images/mainbg.jpeg");
+    background-image: url("../components/Images/mainbg.jpeg");
     display: flex;
     align-items: center;
     justify-content: center;
@@ -302,11 +302,36 @@ a {
 ::placeholder{
     color: black;
 }
+.google-btn {
+    display: flex;
+    align-items: center;
+  }
+  
+  .google-btn p {
+    margin-right: 8px; /* Adjust the margin as needed */
+  }
+  
+  .google-icon {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+.google-icon:hover{
+    border:0.2px solid black;
+}
+  
+  .googlelogo {
+    width: 24px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+  }
+#google_text{
+    margin-top: 18px;
+}  
 /* Responsive */
 @media (max-width:779px) {
     .container {
-        width: 100vw;
-        height: 100vh;
+        width: 60vw;
+        height: 60vh;
     }
 }
 
