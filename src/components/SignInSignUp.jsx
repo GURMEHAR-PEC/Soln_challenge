@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import './SignInSignUp.css';
-import imgnail from '../components/Images/altbg.jpeg';
+import imgnail from '../components/images/altbg.jpeg';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, getAuth, fetchSignInMethodsForEmail , signInWithPopup , GoogleAuthProvider, signInWithGoogle} from 'firebase/auth';
 import { auth } from "../firebase";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-import glogo from '../components/Images/360_F_308543787_DmPo1IELtKY9hG8E8GlW8KHEsRC7JiDN.jpg';
+import glogo from '../components/images/360_F_308543787_DmPo1IELtKY9hG8E8GlW8KHEsRC7JiDN.jpg';
 
 const SignInSignUp = () => {
   const [isSignUpMode, setSignUpMode] = useState(false);
@@ -168,61 +168,61 @@ const SignInSignUp = () => {
   
 
   useEffect(() => {
-    const container = document.querySelector('.container');
+    const container = document.querySelector('.lsp-container');
 
     if (container) {
-      const sign_up_btn = document.querySelector('#sign-up-btn');
-      const sign_in_btn = document.querySelector('#sign-in-btn');
-      const sign_up_btn2 = document.querySelector('#sign-up-btn2');
-      const sign_in_btn2 = document.querySelector('#sign-in-btn2');
+      const sign_up_btn = document.querySelector('#lsp-sign-up-btn');
+      const sign_in_btn = document.querySelector('#lsp-sign-in-btn');
+      const sign_up_btn2 = document.querySelector('#lsp-sign-up-btn2');
+      const sign_in_btn2 = document.querySelector('#lsp-sign-in-btn2');
 
       if (sign_up_btn && sign_in_btn && sign_up_btn2 && sign_in_btn2) {
         sign_up_btn.addEventListener('click', () => {
-          container.classList.add('sign-up-mode');
+          container.classList.add('lsp-sign-up-mode');
         });
 
         sign_in_btn.addEventListener('click', () => {
-          container.classList.remove('sign-up-mode');
+          container.classList.remove('lsp-sign-up-mode');
         });
 
         sign_up_btn2.addEventListener('click', () => {
-          container.classList.add('sign-up-mode2');
+          container.classList.add('lsp-sign-up-mode2');
         });
 
         sign_in_btn2.addEventListener('click', () => {
-          container.classList.remove('sign-up-mode2');
+          container.classList.remove('lsp-sign-up-mode2');
         });
       }
     }
   }, [isSignUpMode]);
 
   return (
-  <>
+  <div className='lsp-body'>
     {/* {successAlertVisible && (
       <div className="alert alert-success" role="alert">
         <i className="bi bi-check-circle"></i> Action completed successfully!
       </div>
     )} */}
 
-    <div className={`container ${isSignUpMode ? 'sign-up-mode' : ''}`}>
-      <div className="signin-signup">
+    <div className={`lsp-container ${isSignUpMode ? 'lsp-sign-up-mode' : ''}`}>
+      <div className="lsp-signin-signup">
         {/* Sign-in form */}
-        <div className={`card-form ${isSignUpMode ? '' : 'visible'}`}>
-          <form action="" className={`sign-in-form ${isSignUpMode ? '' : 'visible'}`} onSubmit={handleSignIn}>
-            <h2 className="title">Sign in</h2>
-            <div className="input-field">
+        <div className={`lsp-card-form ${isSignUpMode ? '' : 'lsp-visible'}`}>
+          <form action="" className={`lsp-sign-in-form ${isSignUpMode ? '' : 'lsp-visible'}`} onSubmit={handleSignIn}>
+            <h2 className="lsp-title">Sign in</h2>
+            <div className="lsp-input-field">
               <i className="fas fa-user"></i>
               <input type="text" placeholder="Email" value={values2.email2} ref={email2Ref} onChange={(e) => setValues2({ ...values2, email2: e.target.value })} />
             </div>
-            <div className="input-field">
+            <div className="lsp-input-field">
               <i className="fas fa-lock"></i>
               <input type="password" placeholder="Password" value={values2.pass2} ref={pass2Ref} onChange={(e) => setValues2({ ...values2, pass2: e.target.value })} />
             </div>
-            <input type="submit" value="Login" className="btn" />
-            <div className="google-btn">
-  <p id="google_text">Sign in with</p>
-  <button type="button" className="google-icon" onClick={handleGoogleSignIn}>
-    <img src={glogo} className='googlelogo' alt="" />
+            <input type="submit" value="Login" className="lsp-btn2" />
+            <div className="lsp-google-btn">
+  <p id="lsp-google_text">Sign in with</p>
+  <button type="button" className="lsp-google-icon" onClick={handleGoogleSignIn}>
+    <img src={glogo} className='lsp-googlelogo' alt="" />
   </button>
 </div>
 
@@ -231,59 +231,59 @@ const SignInSignUp = () => {
         </div>
 
         {/* Sign-up form */}
-        <div className={`card-form ${isSignUpMode ? 'visible' : ''}`}>
-          <form action="" className={`sign-up-form ${isSignUpMode ? 'visible' : ''}`} onSubmit={handleSignUp}>
-            <h2 className="title">Sign up</h2>
-            <div className="input-field">
+        <div className={`lsp-card-form ${isSignUpMode ? 'lsp-visible' : ''}`}>
+          <form action="" className={`lsp-sign-up-form ${isSignUpMode ? 'lsp-visible' : ''}`} onSubmit={handleSignUp}>
+            <h2 className="lsp-title">Sign up</h2>
+            <div className="lsp-input-field">
               <i className="fas fa-user"></i>
               <input type="text" placeholder="Username" value={values.name} ref={nameRef} onChange={(e) => setValues({ ...values, name: e.target.value })} />
             </div>
-            <div className="input-field">
+            <div className="lsp-input-field">
               <i className="fas fa-envelope"></i>
               <input type="text" placeholder="Email" value={values.email} ref={emailRef} onChange={(e) => setValues({ ...values, email:e.target.value })} />
             </div>
-            <div className="input-field">
+            <div className="lsp-input-field">
               <i className="fas fa-lock"></i>
               <input type="password" placeholder="Password" value={values.pass}  ref={passRef} onChange={(e) => setValues({ ...values, pass: e.target.value })} />
             </div>
-            <input type="submit" value="Sign up" className="btn" />
-            <div className="google-btn">
-  <p id="google_text">Sign up with</p>
-  <button type="button" className="google-icon" onClick={handleGoogleSignUp}>
-    <img src={glogo} className='googlelogo' alt="" />
+            <input type="submit" value="Sign up" className="lsp-btn2" />
+            <div className="lsp-google-btn">
+  <p id="lsp-google_text">Sign up with</p>
+  <button type="button" className="lsp-google-icon" onClick={handleGoogleSignUp}>
+    <img src={glogo} className='lsp-googlelogo' alt="" />
   </button>
 </div>
-            <p className="account-text">
-              Already have an account? <button type="button" id="sign-in-btn2" onClick={toggleMode}>Sign in</button>
+            <p className="lsp-account-text">
+              Already have an account? <button type="button" id="lsp-sign-in-btn2" onClick={toggleMode}>Sign in</button>
             </p>
           </form>
         </div>
       </div>
 
       {/* Panels container */}
-      <div className="panels-container">
+      <div className="lsp-panels-container">
         {/* Left panel */}
-        <div className={`panel left-panel ${isSignUpMode ? 'visible' : ''}`}>
-          <div className="content">
-            <div className="background-image">
-              <img src={imgnail} alt="signup" className="image" />
+        <div className={`lsp-panel lsp-left-panel ${isSignUpMode ? 'lsp-visible' : ''}`}>
+          <div className="lsp-content">
+            <div className="lsp-background-image">
+              <img src={imgnail} alt="signup" className="lsp-image" />
             </div>
-            <button type="button" className="btn" onClick={toggleMode}>Sign in</button>
+            <button type="button" className="lsp-btn2" onClick={toggleMode}>Sign in</button>
           </div>
         </div>
 
         {/* Right panel */}
-        <div className={`panel right-panel ${isSignUpMode ? '' : 'visible'}`}>
-          <div className="content">
-            <div className="background-image">
-              <img src={imgnail} alt="signup" className="image" />
+        <div className={`lsp-panel lsp-right-panel ${isSignUpMode ? '' : 'lsp-visible'}`}>
+          <div className="lsp-content">
+            <div className="lsp-background-image">
+              <img src={imgnail} alt="signup" className="lsp-image" />
             </div>
-            <button type="button" className="btn" onClick={toggleMode}>Sign up</button>
+            <button type="button" className="lsp-btn2" onClick={toggleMode}>Sign up</button>
           </div>
         </div>
       </div>
     </div>
-    </>  
+    </div>  
   );
 };
 
