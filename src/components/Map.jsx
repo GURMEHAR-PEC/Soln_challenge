@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export const Map = () => {
+    const [infoWindow, setInfoWindow] = useState(null);
+
     useEffect(() => {
         const initAutocomplete = () => {
             const map = new window.google.maps.Map(document.getElementById("map"), {
@@ -9,6 +11,8 @@ export const Map = () => {
                 mapTypeId: "roadmap",
             });
             const input = document.getElementById("pac-input");
+
+            // Create SearchBox after the Google Maps script is loaded
             const searchBox = new window.google.maps.places.SearchBox(input);
 
             map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -18,6 +22,12 @@ export const Map = () => {
             });
 
             let markers = [];
+
+            const createInfoWindow = (content) => {
+                return new window.google.maps.InfoWindow({
+                    content,
+                });
+            };
 
             searchBox.addListener("places_changed", () => {
                 const places = searchBox.getPlaces();
@@ -47,14 +57,26 @@ export const Map = () => {
                         scaledSize: new window.google.maps.Size(25, 25),
                     };
 
-                    markers.push(
-                        new window.google.maps.Marker({
-                            map,
-                            icon,
-                            title: place.name,
-                            position: place.geometry.location,
-                        }),
-                    );
+                    const marker = new window.google.maps.Marker({
+                        map,
+                        icon,
+                        title: place.name,
+                        position: place.geometry.location,
+                    });
+
+                    const contentString = `<div><strong>${place.name}</strong><br>${place.formatted_address}</div>`;
+
+                    const infowindow = createInfoWindow(contentString);
+
+                    marker.addListener("click", () => {
+                        if (infoWindow) {
+                            infoWindow.close();
+                        }
+                        infowindow.open(map, marker);
+                        setInfoWindow(infowindow);
+                    });
+
+                    markers.push(marker);
                     if (place.geometry.viewport) {
                         bounds.union(place.geometry.viewport);
                     } else {
@@ -63,7 +85,7 @@ export const Map = () => {
                 });
                 map.fitBounds(bounds);
             });
-        }
+        };
 
         window.initAutocomplete = initAutocomplete;
 
@@ -81,16 +103,8 @@ export const Map = () => {
 
     return (
         <div>
-            
-            
-                
-                    <input id="pac-input"  type="text" placeholder="Search Box" />
-                    
-
-
-            <div id="map" style={{ height: '100vh ', width:'100vh' }}></div>
+            <input id="pac-input" type="text" placeholder="Search Box" />
+            <div id="map" style={{ height: '100vh', width: '100%' }}></div>
         </div>
     );
 };
-
-
