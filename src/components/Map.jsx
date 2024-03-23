@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import InfoWindow from './InfoWindow'; 
+import ReactDOMServer from 'react-dom/server';
+
 
 export const Map = () => {
     const [infoWindow, setInfoWindow] = useState(null);
@@ -12,7 +15,7 @@ export const Map = () => {
             });
             const input = document.getElementById("pac-input");
 
-            // Create SearchBox after the Google Maps script is loaded
+
             const searchBox = new window.google.maps.places.SearchBox(input);
 
             map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -23,9 +26,10 @@ export const Map = () => {
 
             let markers = [];
 
+            
             const createInfoWindow = (content) => {
                 return new window.google.maps.InfoWindow({
-                    content,
+                    content: ReactDOMServer.renderToString(content),
                 });
             };
 
@@ -57,6 +61,18 @@ export const Map = () => {
                         scaledSize: new window.google.maps.Size(25, 25),
                     };
 
+                    const InfoWindowContent = ({ place }) => {
+                        console.log("Place:", place);
+                        return (
+                            <div>
+                                <strong>{place.name}</strong>
+                                <br />
+                                {place.formatted_address}
+                            </div>
+                        );
+                    };
+                    
+                    
                     const marker = new window.google.maps.Marker({
                         map,
                         icon,
@@ -64,17 +80,18 @@ export const Map = () => {
                         position: place.geometry.location,
                     });
 
-                    const contentString = `<div><strong>${place.name}</strong><br>${place.formatted_address}</div>`;
+                    
 
-                    const infowindow = createInfoWindow(contentString);
+                    const infowindow = createInfoWindow(<InfoWindowContent place={place}/>);
+                    
 
                     marker.addListener("click", () => {
                         if (infoWindow) {
-                            infoWindow.close();
+                          infoWindow.close();
                         }
                         infowindow.open(map, marker);
                         setInfoWindow(infowindow);
-                    });
+                      });
 
                     markers.push(marker);
                     if (place.geometry.viewport) {
@@ -105,6 +122,7 @@ export const Map = () => {
         <div>
             <input id="pac-input" type="text" placeholder="Search Box" />
             <div id="map" style={{ height: '100vh', width: '100%' }}></div>
+            {infoWindow && <InfoWindow content={infoWindow.getContent()} />}
         </div>
     );
 };
