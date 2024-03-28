@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import InfoWindow from './InfoWindow'; 
 import ReactDOMServer from 'react-dom/server';
+import { useNavigate } from 'react-router-dom';
+import IncidentReportForm from './form';
 
 
 export const Map = () => {
     const [infoWindow, setInfoWindow] = useState(null);
+    const navigate=useNavigate();
 
     useEffect(() => {
         const initAutocomplete = () => {
@@ -61,13 +64,19 @@ export const Map = () => {
                         scaledSize: new window.google.maps.Size(25, 25),
                     };
 
+                    
+                
                     const InfoWindowContent = ({ place }) => {
-                        console.log("Place:", place);
+                        const navigateToFeedback = () => {
+                            navigate('/feedback');
+                        };
                         return (
                             <div>
                                 <strong>{place.name}</strong>
                                 <br />
                                 {place.formatted_address}
+                                <br />
+                                <button onClick={navigateToFeedback}>Give feedback</button>
                             </div>
                         );
                     };
