@@ -3,7 +3,9 @@ import { useState } from 'react';
 import './form.css'; 
 import {Firestore} from '../firebase';
 import {getFirestore,collection,onSnapshot,deleteDoc,addDoc,doc} from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 function IncidentReportForm() {
+  const navigate=useNavigate();
   const db=getFirestore();
   const colref1=collection(db,'sector 17')
   const [formData, setFormData] = useState({
@@ -85,6 +87,7 @@ function IncidentReportForm() {
     <div className='formbg'>     
     <div className='form-container'>
       <form id="myForm" onSubmit={handleSubmit}>
+        
         <div className='mcq'>
         <div className="question">
           <label>Q1. Select Incident Type:</label>
